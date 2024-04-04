@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 
-const Header = () => {
+const HeaderWhite = () => {
   const { data } = useSession();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const Header = () => {
   }, [data]);
 
   return (
-    <div className="px-6 md:px-16  text-white bg-slate-100 md:bg-transparent">
+    <div className="px-6 md:px-16 shadow-md text-black bg-white ">
       <div className="flex items-center justify-between gap-8 ">
         {/* website logo */}
         <Link href="/" className="flex gap-1 items-center justify-center ">
@@ -32,7 +32,7 @@ const Header = () => {
             width={70}
             height={70}
           />
-          <p className="text-lg sm:text-2xl font-bold text-black md:text-white">
+          <p className="text-lg sm:text-2xl font-bold text-black">
             Service Nest
           </p>
         </Link>
@@ -95,4 +95,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderWhite;

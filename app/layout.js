@@ -11,8 +11,8 @@ export const metadata = {
   title: "Service Nest",
   description: "Generated Terminal_boyz",
   icons: {
-    icon: '/assets/logo/smart-home-logo.jpg'
-  }
+    icon: "/assets/logo/smart-home-logo.jpg",
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -20,14 +20,12 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <NextAuthSessionProvider>
-
           <div className="">
-            <Header />
+            {/* <Header /> */}
             <Toaster />
             {children}
             <Footer />
           </div>
-
         </NextAuthSessionProvider>
       </body>
     </html>

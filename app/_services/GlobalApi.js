@@ -1,6 +1,7 @@
 import request, { gql } from "graphql-request";
 
-const MASTER_URL = "https://api-ap-south-1.hygraph.com/v2/" +
+const MASTER_URL =
+  "https://api-ap-south-1.hygraph.com/v2/" +
   process.env.NEXT_PUBLIC_MASTER_URL_KEY +
   "/master";
 
@@ -26,28 +27,26 @@ const getCategory = async () => {
 
 const getAllBusinessList = async () => {
   const query = gql`
-  query BusinessList {
-    businessLists {
-      address
-      category {
+    query BusinessList {
+      businessLists {
+        address
+        category {
+          name
+        }
+        contactPerson
+        email
+        price
+        images {
+          url
+        }
+        id
         name
       }
-      contactPerson
-      email
-      price
-      images {
-        url
-      }
-      id
-      name
     }
-  }
-  
   `;
   const result = await request(MASTER_URL, query);
   return result;
 };
-
 
 const getBusinessByCategory = async (category) => {
   const query =
@@ -74,12 +73,13 @@ const getBusinessByCategory = async (category) => {
   return result;
 };
 
-
 const getBusinessById = async (id) => {
   const query =
     gql`
   query GetBusinessById {
-    businessList(where: {id: "` + id + `"}) {
+    businessList(where: {id: "` +
+    id +
+    `"}) {
     about
     address
     category {
@@ -100,15 +100,32 @@ const getBusinessById = async (id) => {
   return result;
 };
 
-const createNewBooking = async (businessId, date, time, userEmail, userName) => {
-  const mutationQuery = gql`
+const createNewBooking = async (
+  businessId,
+  date,
+  time,
+  userEmail,
+  userName
+) => {
+  const mutationQuery =
+    gql`
   mutation CreateBooking {
     createBooking(
       data: {bookingStatus: Booked, 
-        businessList: {connect: {id: "`+ businessId + `"}},
-         date: "`+ date + `", time: "` + time + `", 
-         userEmail: "`+ userEmail + `",
-          userName: "`+ userName + `"}
+        businessList: {connect: {id: "` +
+    businessId +
+    `"}},
+         date: "` +
+    date +
+    `", time: "` +
+    time +
+    `", 
+         userEmail: "` +
+    userEmail +
+    `",
+          userName: "` +
+    userName +
+    `"}
     ) {
       id
     }
@@ -116,32 +133,37 @@ const createNewBooking = async (businessId, date, time, userEmail, userName) => 
       count
     }
   }
-  `
-  const result = await request(MASTER_URL, mutationQuery)
+  `;
+  const result = await request(MASTER_URL, mutationQuery);
   return result;
-}
-
+};
 
 const BusinessBookedSlot = async (businessId, date) => {
-  const query = gql`
+  const query =
+    gql`
   query BusinessBookedSlot {
     bookings(where: {businessList: 
-      {id: "`+ businessId + `"}, date: "` + date + `"}) {
+      {id: "` +
+    businessId +
+    `"}, date: "` +
+    date +
+    `"}) {
       date
       time
     }
   }
-  `
-  const result = await request(MASTER_URL, query)
+  `;
+  const result = await request(MASTER_URL, query);
   return result;
-}
-
-
+};
 
 const GetUserBookingHistory = async (userEmail) => {
-  const query = gql`
+  const query =
+    gql`
   query GetUserBookingHistory {
-    bookings(where: {userEmail: "`+ userEmail + `"}
+    bookings(where: {userEmail: "` +
+    userEmail +
+    `"}
     orderBy: publishedAt_DESC) {
       businessList {
         name
@@ -156,31 +178,26 @@ const GetUserBookingHistory = async (userEmail) => {
       id
     }
   }
-  `
-  const result = await request(MASTER_URL, query)
+  `;
+  const result = await request(MASTER_URL, query);
   return result;
-
-}
-
-
+};
 
 const deleteBooking = async (bookingId) => {
   const mutationQuery = gql`
-  mutation DeleteBooking {
-    updateBooking(
-      data: {userName: "RRRS"}
-      where: {id: "cltastwp36re707jzb02sgdlm"}
-    ) {
-      id
+    mutation DeleteBooking {
+      updateBooking(
+        data: { userName: "RRRS" }
+        where: { id: "cltastwp36re707jzb02sgdlm" }
+      ) {
+        id
+      }
     }
-  }
-  `
+  `;
 
-  const result = await request(MASTER_URL, mutationQuery)
+  const result = await request(MASTER_URL, mutationQuery);
   return result;
-
-}
-
+};
 
 export default {
   getCategory,
@@ -190,5 +207,5 @@ export default {
   createNewBooking,
   BusinessBookedSlot,
   GetUserBookingHistory,
-  deleteBooking
+  deleteBooking,
 };
